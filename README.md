@@ -1,2 +1,3 @@
-# Project-BSDS
-Supercell Brawl stars server emulator designed for fun and educational uses.
+Discord link : https://discord.gg/mt4dUxXryh
+
+ANDROID : https://www.mediafire.com/file/z29h4xqqtwge1cz/com.projectbsds.v40150-rev1.apk/file
