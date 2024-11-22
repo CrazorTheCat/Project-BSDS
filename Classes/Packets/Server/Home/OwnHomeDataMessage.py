@@ -213,8 +213,6 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(player.Tokens)
         self.writeVInt(-1)
 
-        self.writeVInt(0)
-
         self.writeVInt(0) # Array
 
         self.writeVInt(0)
