@@ -1,10 +1,10 @@
 Discord link : https://discord.gg/mt4dUxXryh
 
-ANDROID 1 (MEDIAFIRE) : https://www.mediafire.com/file/biid9ttuhiyeaoi/com.projectbsds.v44226.apk/file
+ANDROID (MEDIAFIRE) : https://www.mediafire.com/file/6hxotr77m4miwie/com.projectbsds.v45225.apk/file
 
-ANDROID 2 (GOOGLE DRIVE) : https://drive.google.com/file/d/1zKy632blJDJV7YuBnUZe18Pxpra2lvm5/view?usp=sharing
+Server ZIP: https://github.com/CrazorTheCat/Project-BSDS/archive/refs/heads/V45.zip
 
-Server ZIP: https://github.com/CrazorTheCat/BSDS-V44/archive/refs/heads/master.zip
+## NOTE: TESTED ON BLUESTACK V5.21.600.1019 pie and android 11 and for phone it does not support **arm64 only phone**, like the pixel 7 ##
 
 ## Requirements: ##
 1. a brain...
@@ -26,6 +26,6 @@ Server ZIP: https://github.com/CrazorTheCat/BSDS-V44/archive/refs/heads/master.z
 4. open Core.py using py Core.py 
 5. now open the game and Enjoy!
 
-## Change the ip address and port (if needed) in libprojectbsds.config.so located in the lib folder of the apk ##
+## Change the ip address and port (if needed) default is 127.0.0.1 port 9339 in libprojectbsds.config.so located in the lib folder of the apk ##
 
-![bsdsv44](https://user-images.githubusercontent.com/52799759/176961091-0fe7c802-5ad5-433e-9e36-edec5545f492.png)
+![BSDS-V45](https://github.com/user-attachments/assets/95f2a049-6c9c-4651-9812-9901040028f2)
