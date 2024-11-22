@@ -13,6 +13,6 @@ class PlayerThumbnails:
                 else:
                     if row[8].lower() == 'true':
                         ThumbnailsID.append(line_count - 2)
-                    if row[0] != "":
-                        line_count += 1
+                    #if row[0] != "":
+                    line_count += 1
             return ThumbnailsID

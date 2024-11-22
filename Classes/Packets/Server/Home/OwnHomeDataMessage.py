@@ -10,6 +10,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.messageVersion = 0
 
     def encode(self, fields, player):
+
         ownedBrawlersCount = len(player.OwnedBrawlers)
         ownedPinsCount = len(player.OwnedPins)
         ownedThumbnailCount = len(player.OwnedThumbnails)
@@ -43,12 +44,12 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0) # Current Random Skin
 
         #self.writeVInt(len(ownedSkins))
-        self.writeVInt(600)
+        self.writeVInt(583)
 
         #for skinID in ownedSkins:
         #    self.writeDataReference(29, skinID)
 
-        for i in range(600):
+        for i in range(583):
             self.writeDataReference(29, i)
 
         self.writeVInt(0) # Unlocked Skin Purchase Option
@@ -65,19 +66,25 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
         self.writeVInt(0)
 
-        self.writeVInt(999)
-        self.writeVInt(999)
+        # Forced Drops
+        self.writeVInt(0)
+        self.writeVInt(0)
 
         self.writeVInt(5)
+        for i in range(5):
+            self.writeVInt(1)
+        # Forced Drops
 
-        self.writeVInt(999)
-        self.writeVInt(999)
-        self.writeVInt(999)
-        self.writeVInt(999)
-        self.writeVInt(999)
+        self.writeBoolean(False) # Timed Offer 1
+        # datareference
+        # vint
+        # vint
 
-        self.writeBoolean(False) # Offer 1
-        self.writeBoolean(False) # Offer 2
+        self.writeBoolean(False) # Timed Offer 2
+        # datareference
+        # vint
+        # vint
+
         self.writeBoolean(True) # Token Doubler Enabled
         self.writeVInt(2)  # Token Doubler New Tag State
         self.writeVInt(2)  # Event Tickets New Tag State
@@ -126,7 +133,7 @@ class OwnHomeDataMessage(PiranhaMessage):
 
         self.writeVInt(1 + len(ShopData["Offers"])) # Offers count
 
-        self.writeVInt(1)  # RewardCount
+        self.writeVInt(1)  # LogicGemOffer
         for i in range(1):
             self.writeVInt(6) # ItemType
             self.writeVInt(0)
@@ -143,8 +150,10 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
         self.writeBoolean(False)
         self.writeVInt(49)
-        self.writeInt(0)
+
+        self.writeInt(0) # Chronos Text Entry
         self.writeString("Update Database")
+
         self.writeBoolean(False)
         self.writeString()
         self.writeVInt(-1)
@@ -156,6 +165,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeBoolean(False)
         self.writeDataReference(0)
         self.writeDataReference(0)
+        self.writeVInt(0)
 
         for i in ShopData["Offers"]:
             self.writeVInt(i["RewardsCount"])  # RewardCount
@@ -197,11 +207,15 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeBoolean(i["Claimed"])
             self.writeDataReference(0)
             self.writeDataReference(0)
+            self.writeBoolean(False)
+
 
         self.writeVInt(player.Tokens)
         self.writeVInt(-1)
 
         self.writeVInt(0)
+
+        self.writeVInt(0) # Array
 
         self.writeVInt(0)
         self.writeVInt(0)
@@ -238,7 +252,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
 
         self.writeVInt(2)  # Brawlpass
-        for i in range(11, 13):
+        for i in range(12, 14):
             self.writeVInt(i)
             self.writeVInt(34500)
             self.writeBoolean(True)
@@ -280,7 +294,21 @@ class OwnHomeDataMessage(PiranhaMessage):
                 self.writeVInt(1)
                 self.writeVInt(1)
 
-        self.writeBoolean(False)
+        self.writeBoolean(True) # Power League Array
+        # Power League Data Array Start #
+        self.writeVInt(0) # ?
+        self.writeVInt(1) # Rank Solo League
+        self.writeVInt(0) # ?
+        self.writeVInt(1) # Rank Team League
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        self.writeVInt(0)
+        # Power League Data Array End #
 
         self.writeInt(0)
 
@@ -329,7 +357,7 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeString()
             self.writeVInt(0)
             self.writeVInt(0)
-            self.writeVInt(0)
+            self.writeVInt(3)
             self.writeVInt(0)  # Modifiers
             self.writeVInt(0)
             self.writeVInt(0)
@@ -339,6 +367,7 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeVInt(0)
             self.writeVInt(0)
             self.writeBoolean(False)  # ChronosTextEntry
+            self.writeBoolean(False)
             self.writeBoolean(False)
             self.writeBoolean(False)
             self.writeVInt(-1)
@@ -361,7 +390,7 @@ class OwnHomeDataMessage(PiranhaMessage):
 
         self.writeLong(10008, 501)
         self.writeLong(65, 2)
-        self.writeLong(1, 41000045)  # ThemeID
+        self.writeLong(1, 41000050)  # ThemeID
         self.writeLong(60, 36270)
         self.writeLong(66, 1)
         self.writeLong(61, 36270)  # SupportDisabled State | if 36218 < state its true
@@ -498,8 +527,8 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)  # WinCount
         self.writeVInt(0)  # LoseCount
         self.writeVInt(0)  # WinLooseStreak
-        self.writeVInt(0)  # NpcWinCount
-        self.writeVInt(0)  # NpcLoseCount
+        self.writeVInt(2)  # NpcWinCount
+        self.writeVInt(2)  # NpcLoseCount
         self.writeVInt(2)  # TutorialState | shouldGoToFirstTutorialBattle = State == 0
         self.writeVInt(5)
         self.writeVInt(0)

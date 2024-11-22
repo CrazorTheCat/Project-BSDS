@@ -12,7 +12,8 @@ class Characters:
                 if line_count == 0 or line_count == 1:
                     line_count += 1
                 else:
-                    if row[24] == 'Hero' and row[2].lower() != 'true' and row[0] != "MechaDudeBig":
+                    #print(row.index("Hero"))
+                    if row[25] == 'Hero' and row[2].lower() != 'true' and (line_count - 2 < 80):
                         BrawlersID.append(line_count - 2)
                     line_count += 1
 

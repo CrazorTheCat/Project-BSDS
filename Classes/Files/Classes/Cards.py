@@ -40,7 +40,7 @@ class Cards:
                         if line_count == 0 or line_count == 1:
                             line_count += 1
                         else:
-                            print(row)
+                            #print(row)
                             if row[7].lower() == '4' and row[3] == name and row[4] != "true":
                                 # print(row[0], line_count - 3)
                                 id.append(line_count - 2)

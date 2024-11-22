@@ -52,7 +52,7 @@ class LoginMessage(PiranhaMessage):
         return fields
 
     def execute(message, calling_instance, fields):
-        if fields["ClientMajor"] == 44:
+        if fields["ClientMajor"] == 45:
             calling_instance.player.ClientVersion = f'{str(fields["ClientMajor"])}.{str(fields["ClientBuild"])}.{str(fields["ClientMinor"])}'
             fields["Socket"] = calling_instance.client
             db_instance = DatabaseHandler()
@@ -73,10 +73,11 @@ class LoginMessage(PiranhaMessage):
             if Configuration.settings["UseContentUpdater"] == True and fields["ResourceSha"] != contentUpdateInfo[1]:
                 Messaging.sendMessage(20103, {'Socket': calling_instance.client, 'ErrorID': 7, 'Message': None, 'FingerprintData': Utility.getFingerprintData(contentUpdateInfo[1]), 'ContentURL': f'http://{socket.gethostbyname(socket.gethostname())}:8080'})
 
-            elif fields["ClientMajor"] == 44:
+            elif fields["ClientMajor"] == 45:
                 Messaging.sendMessage(20104, fields, calling_instance.player)
                 Messaging.sendMessage(24101, fields, calling_instance.player)
 
+                
                 try:
                     clubdb_instance = ClubDatabaseHandler()
                     json.loads(clubdb_instance.getClubWithLowID(calling_instance.player.AllianceID[1])[0][1])
@@ -91,6 +92,7 @@ class LoginMessage(PiranhaMessage):
                 Messaging.sendMessage(24399, fields, calling_instance.player)
                 if fields["HasClub"]:
                     Messaging.sendMessage(24311, fields, calling_instance.player)
+                
 
             db_instance.cursor.close()
 

@@ -131,7 +131,7 @@ class Skins:
                         for i in row:
                             if i != '':
                                 formatedRow.append(i)
-                        print(formatedRow)
+                        #print(formatedRow)
                     if row[0] != "":
                         line_count += 1
 
@@ -167,10 +167,14 @@ class Skins:
                                     if line_count == 0 or line_count == 1:
                                         line_count += 1
                                     else:
-                                        if row[1] == conf_name:
+                                        if row[1] == conf_name and "Default" not in row[1]:
+                                            #print(row[0], row[1], line_count - 2)
+                                            #print(line_count - 2, row[1])
                                             id.append(line_count - 2)
-                                        if row[0] != "":
-                                            line_count += 1
+                                        line_count += 1
+                                        #if row[0] != "":
+                                        #    print(row)
+                                        #    line_count += 1
 
                     char_file.close()
                     cards_file.close()

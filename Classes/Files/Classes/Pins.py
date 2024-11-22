@@ -14,7 +14,7 @@ class Pins:
                 else:
                     if row[1].lower() != 'true':
                         EmotesID.append(line_count - 2)
-                    if row[0] != "":
-                        line_count += 1
+                    #if row[0] != "":
+                    line_count += 1
 
             return EmotesID

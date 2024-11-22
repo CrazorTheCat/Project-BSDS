@@ -1,4 +1,6 @@
 from Classes.Commands.LogicServerCommand import LogicServerCommand
+from Classes.Wrappers.DeliveryUnit import DeliveryUnit
+from Classes.Wrappers.GatchaDrop import GatchaDrop
 
 
 class LogicGiveDeliveryItemsCommand(LogicServerCommand):
@@ -8,33 +10,21 @@ class LogicGiveDeliveryItemsCommand(LogicServerCommand):
     def encode(self, fields):
         self.writeVInt(0)
 
-        self.writeVInt(1)
+        self.writeVInt(1) # array
 
-        self.writeVInt(12)
+        for i in range(1):
+            DeliveryUnit.encode(self, [100, 1, [10, 0, 7, 0, 0, 0, i, i]])
 
-        self.writeVInt(2)
-
-        self.writeVInt(116)
-        self.writeVInt(0)
-        self.writeVInt(7)
-        self.writeHexa('00 00 00', 3)
-
-        self.writeVInt(0)
-        self.writeVInt(0)
-        self.writeVInt(1)
-        self.writeVInt(29)
-        self.writeVInt(218)
-        self.writeVInt(5)
-        self.writeHexa('00 00 00', 3)
+        self.writeBoolean(False) # TODO: Forced Drops
 
         self.writeVInt(0)
         self.writeVInt(0)
         self.writeVInt(0)
-        self.writeVInt(0)
-        self.writeVInt(0)
-        self.writeVInt(0)
-        self.writeVInt(0)
-        self.writeVInt(3)
+        self.writeBoolean(False)
+        self.writeBoolean(False)
+        self.writeBoolean(False)
+        self.writeDataReference(0, 0)
+
         LogicServerCommand.encode(self, fields)
         return self.messagePayload
 
