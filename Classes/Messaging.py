@@ -1,20 +1,20 @@
 import traceback
 
-from Classes.ByteStream import ByteStream
-
-
 class Messaging:
+    @staticmethod
     def writeHeader(message, payloadLen):
         message.messageBuffer += message.getMessageType().to_bytes(2, 'big', signed=True)
         message.messageBuffer += payloadLen.to_bytes(3, 'big', signed=True)
         message.messageBuffer += message.messageVersion.to_bytes(2, 'big', signed=True)
 
+    @staticmethod
     def readHeader(headerBytes):
         headerData = []
         headerData.append(int.from_bytes(headerBytes[:2], 'big', signed=True))
         headerData.append(int.from_bytes(headerBytes[2:5], 'big', signed=True))
         return headerData
 
+    @staticmethod
     def sendMessage(messageType, fields, player=None):
         from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
         message = LogicLaserMessageFactory.createMessageByType(messageType, b'')

@@ -1,12 +1,5 @@
 from Classes.Packets.PiranhaMessage import PiranhaMessage
 
-
-import Configuration
-
-from Classes.Packets.PiranhaMessage import PiranhaMessage
-from Classes.Utility import Utility
-
-
 class LoginFailedMessage(PiranhaMessage):
     def __init__(self, messageData):
         super().__init__(messageData)
@@ -14,14 +7,18 @@ class LoginFailedMessage(PiranhaMessage):
 
     def encode(self, fields):
         self.writeInt(fields['ErrorID'])
-        self.writeString(fields['FingerprintData'])
-        self.writeString()
-        self.writeString(fields['ContentURL'])
-        self.writeString()
-        self.writeString(fields['Message'])
-        self.writeInt(0)
-        self.writeBoolean(False)
-        self.writeInt(0)
+
+        self.writeString(fields.get("FingerprintData", None)) # Fingerprint
+        self.writeString() # Redirect URL
+        self.writeString(fields.get('ContentURL', None))
+        self.writeString(fields.get("UpdateURL", None)) # "Update Available!" URL
+        self.writeString(fields.get('Message', None))
+
+        self.writeInt(fields.get("MaintenanceTime", 0)) # Maintenance Time Left
+        self.writeBoolean(False) # Show Support Page
+
+        self.writeBytes(b'', 0) # Compressed Fingerprint
+
         self.writeInt(0)
         self.writeInt(0)
         self.writeInt(0)
@@ -59,7 +56,7 @@ class LoginFailedMessage(PiranhaMessage):
         fields["Unk4"] = self.readVInt()
         fields["Unk5"] = self.readString()
         fields["OptionalTargetedAccountIdState"] = self.readBoolean()
-        if fields["OptionalTargetedAccountIdState"] == True:
+        if fields["OptionalTargetedAccountIdState"]:
             fields["OptionalTargetedAccountId"] = self.readLong()
         super().decode(fields)
         return fields
