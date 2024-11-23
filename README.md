@@ -4,8 +4,6 @@ ANDROID (MEDIAFIRE) : https://www.mediafire.com/file/6hxotr77m4miwie/com.project
 
 Server ZIP: https://github.com/CrazorTheCat/Project-BSDS/archive/refs/heads/V45.zip
 
-## NOTE: TESTED ON BLUESTACK V5.21.600.1019 pie and android 11 and for phone it does not support **arm64 only phone**, like the pixel 7 ##
-
 ## Requirements: ##
 1. a brain...
 
