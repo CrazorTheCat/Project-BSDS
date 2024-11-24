@@ -1,0 +1,50 @@
+{
+  "ActiveEvents": [
+    {
+      "EventIndex": 1,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 5,
+      "EventGameModeVariation": -1,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
+    },
+    {
+      "EventIndex": 7,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 563,
+      "EventGameModeVariation": 29,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
+    },
+    {
+      "EventIndex": 2,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 7,
+      "EventGameModeVariation": -1,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
+    },
+    {
+      "EventIndex": 3,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 24,
+      "EventGameModeVariation": -1,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
+    }
+  ],
+
+  "ComingUpEvents": []
+}

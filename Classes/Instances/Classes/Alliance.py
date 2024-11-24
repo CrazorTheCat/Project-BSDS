@@ -15,7 +15,7 @@ class Alliance:
             'HighID': fields["ClubID"][0],
             'LowID': fields["ClubID"][1],
             'Name': fields['Name'],
-            'Members': {str(calling_instance.player.ID[1]): {'HighID': calling_instance.player.ID[0], 'LowID': calling_instance.player.ID[1], 'Name': calling_instance.player.Name, 'Role': 2, 'Trophies': calling_instance.player.Trophies, 'NameColor': calling_instance.player.Namecolor, 'Thumbnail': calling_instance.player.Thumbnail}},
+            'Members': [{'HighID': calling_instance.player.ID[0], 'LowID': calling_instance.player.ID[1], 'Name': calling_instance.player.Name, 'Role': 2, 'Trophies': calling_instance.player.Trophies, 'NameColor': calling_instance.player.Namecolor, 'Thumbnail': calling_instance.player.Thumbnail}],
             'Description': fields['Description'],
             'BadgeID': fields['Badge'][1],
             'RegionID': fields['Region'][1],

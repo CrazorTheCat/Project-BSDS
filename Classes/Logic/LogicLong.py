@@ -2,10 +2,6 @@ from typing import overload
 
 
 class LogicLong:
-    def __init__(self):
-        self.high = 0
-        self.low = 0
-
     def __init__(self, high, low):
         self.high = high
         self.low = low

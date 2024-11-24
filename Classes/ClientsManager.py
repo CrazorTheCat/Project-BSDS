@@ -2,10 +2,10 @@ class ClientsManager:
 
     PlayersList = {}
 
-    def AddPlayer(playerID, socket):
+    def AddPlayer(playerID, socket, connection):
         if ClientsManager.PlayersList.keys().__contains__(playerID[1]):
             ClientsManager.RemovePlayer(playerID)
-        ClientsManager.PlayersList[playerID[1]] = {"Socket": socket}
+        ClientsManager.PlayersList[playerID[1]] = {"Socket": socket, "Connection": connection}
 
     def RemovePlayer(PlayerID):
         try:

@@ -4,7 +4,6 @@ import Configuration
 from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
 from Classes.Messaging import Messaging
 
-
 class MessageManager:
     def receiveMessage(self, messageType, messagePayload):
         message = LogicLaserMessageFactory.createMessageByType(messageType, messagePayload)
@@ -14,11 +13,11 @@ class MessageManager:
                     message.encode()
                 else:
                     message.fields = message.decode()
-                    if Configuration.settings["Proxy"] == False:
+                    if not Configuration.settings["Proxy"]:
                         message.execute(self, message.fields)
 
             except Exception:
                 print(traceback.format_exc())
         
-        if Configuration.settings["Proxy"] == False:
+        if not Configuration.settings["Proxy"]:
             Messaging.sendMessage(23457, {"Socket": self.client}, self.player)

@@ -12,7 +12,8 @@ from Classes.Packets.Client.Alliance.CreateAllianceMessage import CreateAlliance
 from Classes.Packets.Client.Alliance.AskForAllianceDataMessage import AskForAllianceDataMessage
 from Classes.Packets.Client.Alliance.AskForJoinableAlliancesListMessage import AskForJoinableAlliancesListMessage
 from Classes.Packets.Client.Alliance.ChangeAllianceSettingsMessage import ChangeAllianceSettingsMessage
-
+from Classes.Packets.Client.Alliance.JoinAllianceMessage import JoinAllianceMessage
+from Classes.Packets.Client.Alliance.ChatToAllianceStreamMessage import ChatToAllianceStreamMessage
 from Classes.Packets.Server.Authentification.LoginFailedMessage import LoginFailedMessage
 from Classes.Packets.Server.Authentification.LoginOkMessage import LoginOkMessage
 from Classes.Packets.Server.Authentification.OutOfSyncMessage import OutOfSyncMessage
@@ -138,11 +139,11 @@ class LogicLaserMessageFactory:
         14302: AskForAllianceDataMessage,
         14303: AskForJoinableAlliancesListMessage,
         14304: 'AskForAllianceStreamMessage',
-        14305: 'JoinAllianceMessage',
+        14305: JoinAllianceMessage,
         14306: 'ChangeAllianceMemberRoleMessage',
         14307: 'KickAllianceMemberMessage',
         14308: 'LeaveAllianceMessage',
-        14315: 'ChatToAllianceStreamMessage',
+        14315: ChatToAllianceStreamMessage,
         14316: ChangeAllianceSettingsMessage,
         14317: 'RequestJoinAllianceMessage',
         14321: 'RespondToAllianceJoinRequestMessage',

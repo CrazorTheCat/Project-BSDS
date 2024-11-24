@@ -79,7 +79,7 @@ class DatabaseHandler():
 
     def updatePlayerData(self, data, calling_instance):
         try:
-            self.cursor.execute("UPDATE main SET Data=? WHERE ID=?", (json.dumps(data, ensure_ascii=0), calling_instance.player.ID[1]))
+            self.cursor.execute("UPDATE main SET Data=? WHERE ID=?", (json.dumps(data, ensure_ascii=False), calling_instance.player.ID[1]))
             self.conn.commit()
             self.loadAccount(calling_instance.player, calling_instance.player.ID)
         except Exception:
@@ -107,7 +107,7 @@ class ClubDatabaseHandler:
     def createClub(self, lowID, data):
         try:
             self.cursor.execute("INSERT INTO main (LowID, Data) VALUES (?, ?)",
-                                (lowID, json.dumps(data, ensure_ascii=0)))
+                                (lowID, json.dumps(data, ensure_ascii=False)))
             self.conn.commit()
         except Exception as e:
             print(e)
@@ -145,7 +145,7 @@ class ClubDatabaseHandler:
             print(traceback.format_exc())
 
     def getDefaultMembersData(self, player, role):
-        return {'HighID': player.HighID, 'LowID': player.LowID, 'Name': player.Name, 'Role': role, 'Trophies': player.trophies, 'NameColor': player.nameColor, 'Thumbnail': player.thumbnail}
+        return {'HighID': player.ID[0], 'LowID': player.ID[1], 'Name': player.Name, 'Role': role, 'Trophies': player.Trophies, 'NameColor': player.Namecolor, 'Thumbnail': player.Thumbnail}
 
     def getDefaultMessageData(self, eventType, streamType, lastID, playerID, playerName, playerRole, target={}, msgData="", premadeID=-1, messageDataID=-1):
         return {'StreamType': eventType, 'EventType': streamType, 'StreamID': lastID, 'PlayerID': playerID, 'PlayerName': playerName, 'PlayerRole': playerRole, 'Message': msgData, 'Target': target, 'PremadeID': premadeID, 'MessageDataID': messageDataID}
@@ -159,20 +159,40 @@ class ClubDatabaseHandler:
 
     def getMembersSorted(self, clubdata):
         try:
-            return sorted(clubdata['Members'].items(), key = lambda x: x[1]['Trophies'], reverse=True)
+            return sorted(clubdata['Members'], key = lambda x: x['Trophies'], reverse=True)
         except Exception as e:
             print(e)
 
-    def getMemberWithLowID(self, clubData, playerLowID):
+    def getMemberWithLowID(self, clubData, playerLowID) -> dict:
+        '''
+        Gets a Club Member from the playerLowID specified. playerLowID parameter must be an Integer
+        :param clubData:
+        :param playerLowID:
+        :return:
+        '''
         try:
-            return clubData["Members"][str(playerLowID)]
+            for m in clubData["Members"]:
+                if m["LowID"] == playerLowID: return m
+        except Exception as e:
+            print(e)
+
+    def getMemberWithID(self, clubData, playerID: list) -> dict:
+        '''
+        Gets a Club Member from the playerID specified. playerID parameter must be a List
+        :param clubData:
+        :param playerID:
+        :return:
+        '''
+        try:
+            for m in clubData["Members"]:
+                if [m["HighID"], m["LowID"]] == playerID: return m
         except Exception as e:
             print(e)
 
     def getTotalTrophies(self, clubData):
         try:
             totalTrophies = 0
-            for i in clubData["Members"].values():
+            for i in clubData["Members"]:
                 totalTrophies += i['Trophies']
             return totalTrophies
         except Exception as e:
@@ -189,7 +209,7 @@ class ClubDatabaseHandler:
 
     def updateClubData(self, data, lowID):
         try:
-            self.cursor.execute("UPDATE main SET Data=? WHERE LowID=?", (json.dumps(data, ensure_ascii=0), lowID))
+            self.cursor.execute("UPDATE main SET Data=? WHERE LowID=?", (json.dumps(data, ensure_ascii=False), lowID))
             self.conn.commit()
         except Exception as e:
-            print(e)
+            print(traceback.format_exc())

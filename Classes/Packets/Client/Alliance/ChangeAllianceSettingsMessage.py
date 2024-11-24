@@ -31,7 +31,7 @@ class ChangeAllianceSettingsMessage(PiranhaMessage):
         clubdb_instance = ClubDatabaseHandler()
         clubData = json.loads(clubdb_instance.getClubWithLowID(calling_instance.player.AllianceID[1])[0][1])
 
-        if clubData["Members"][str(calling_instance.player.ID[1])]["Role"] == 2:
+        if clubdb_instance.getMemberWithID(calling_instance.player.ID) == 2:
             clubData["Description"] = fields["Description"]
             clubData["BadgeID"] = fields["Badge"][1]
             clubData["RegionID"] = fields["Region"][1]
@@ -39,8 +39,6 @@ class ChangeAllianceSettingsMessage(PiranhaMessage):
             clubData["TrophiesRequired"] = fields["RequiredTrophies"]
             clubData["FamilyFriendly"] = fields["FamilyFriendly"]
             clubdb_instance.updateClubData(clubData, calling_instance.player.AllianceID[1])
-            fields["HasClub"] = True
-            Messaging.sendMessage(24399, fields, calling_instance.player)
             Messaging.sendMessage(24313, fields, calling_instance.player)
             fields["ResponseID"] = 10
             Messaging.sendMessage(24333, fields)

@@ -13,6 +13,9 @@ class PiranhaMessage(ByteStream):
         if Configuration.settings['PrintEnabled']:
             Utility.parseFields(fields)
 
+    def execute(self, calling_instance, fields):
+        pass
+
     def getLength(self):
         return len(self.messageBuffer)
 

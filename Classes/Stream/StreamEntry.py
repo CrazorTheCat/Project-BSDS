@@ -1,11 +1,12 @@
 from Classes.ByteStream import ByteStream
 
 class StreamEntry:
-    def encode(self: ByteStream, info):
-        self.writeLogicLong(info['StreamID'][0], info['StreamID'][1]) # StreamEntryID
-        self.writeLogicLong(info['PlayerID'][0], info['PlayerID'][1]) # TargetID
-        self.writeString(info['PlayerName'])
-        self.writeVInt(info['PlayerRole'])
-        self.writeVInt(0)
-        self.writeBoolean(False)
 
+    @staticmethod
+    def encode(self: ByteStream, stream):
+        self.writeLogicLong(*stream["StreamID"]) # StreamEntryID
+        self.writeLogicLong(*[0, 1]) # SenderID
+        self.writeString(stream['PlayerName'])
+        self.writeVInt(stream['PlayerRole'])
+        self.writeVInt(0) # Time since Stream was sent
+        self.writeBoolean(False)

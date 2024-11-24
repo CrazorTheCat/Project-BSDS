@@ -1,11 +1,5 @@
-from Classes.Instances.Classes.Alliance import Alliance
 from Classes.Messaging import Messaging
-
 from Classes.Packets.PiranhaMessage import PiranhaMessage
-from Classes.Utility import Utility
-from Database.DatabaseHandler import DatabaseHandler, ClubDatabaseHandler
-import json
-
 
 class AskForJoinableAlliancesListMessage(PiranhaMessage):
     def __init__(self, messageData):

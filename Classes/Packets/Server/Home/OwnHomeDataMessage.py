@@ -1,7 +1,7 @@
 import time
-
 from Classes.ByteStreamHelper import ByteStreamHelper
 from Classes.Packets.PiranhaMessage import PiranhaMessage
+from Configuration import settings
 from Static.StaticData import StaticData
 
 class OwnHomeDataMessage(PiranhaMessage):
@@ -10,7 +10,6 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.messageVersion = 0
 
     def encode(self, fields, player):
-
         ownedBrawlersCount = len(player.OwnedBrawlers)
         ownedPinsCount = len(player.OwnedPins)
         ownedThumbnailCount = len(player.OwnedThumbnails)
@@ -25,6 +24,8 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(int(time.time()))
         self.writeVInt(0)
 
+        # LogicClientHome::encode Begin
+        # LogicDailyData::encode Begin
         self.writeVInt(0)
         self.writeVInt(0)
         self.writeVInt(player.Trophies) # Trophies
@@ -35,7 +36,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeDataReference(28, player.Thumbnail) # Thumbnail
         self.writeDataReference(43, player.Namecolor) # Namecolor
 
-        self.writeVInt(0)
+        self.writeVInt(0) # Played GameModes Array
 
         self.writeVInt(0) # Selected Skins
 
@@ -66,11 +67,11 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
         self.writeVInt(0)
 
-        # Forced Drops
+        # Forced Drops Array
         self.writeVInt(0)
         self.writeVInt(0)
 
-        self.writeVInt(5)
+        self.writeVInt(5) # Rarities Count
         for i in range(5):
             self.writeVInt(1)
         # Forced Drops
@@ -209,11 +210,10 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeDataReference(0)
             self.writeBoolean(False)
 
+        self.writeVInt(player.Tokens) # Available Tokens
+        self.writeVInt(-1) # Time left until Tokens refill
 
-        self.writeVInt(player.Tokens)
-        self.writeVInt(-1)
-
-        self.writeVInt(0) # Array
+        self.writeVInt(0) # Tickets Purchased Price Index
 
         self.writeVInt(0)
         self.writeVInt(0)
@@ -225,44 +225,51 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeString(player.Region)
         self.writeString(player.ContentCreator)
 
-        self.writeVInt(20)
-        self.writeLong(2, 1)  # Unknown
-        self.writeLong(3, 0)  # Tokens Gained
-        self.writeLong(4, 0)  # Trophies Gained
-        self.writeLong(6, 0)  # Demo Account
-        self.writeLong(7, 0)  # Invites Blocked
-        self.writeLong(8, 0)  # Star Points Gained
-        self.writeLong(9, 1)  # Show Star Points
-        self.writeLong(10, 0)  # Power Play Trophies Gained
-        self.writeLong(12, 1)  # Unknown
-        self.writeLong(14, 0)  # Coins Gained
-        self.writeLong(15, 0)  # AgeScreen | 3 = underage (disable social media) | 1 = age popup
-        self.writeLong(16, 1)
-        self.writeLong(17, 0)  # Team Chat Muted
-        self.writeLong(18, 1)  # Esport Button
-        self.writeLong(19, 0)  # Champion Ship Lives Buy Popup
-        self.writeLong(20, 0)  # Gems Gained
-        self.writeLong(21, 0)  # Looking For Team State
-        self.writeLong(22, 1)
-        self.writeLong(23, 0)  # Club Trophies Gained
-        self.writeLong(24, 1)  # Have already watched club league stupid animation
+        self.writeVInt(20) # IntValueEntry::encode for LogicDailyData
+        for x in range(1):
+            self.writeLong(2, 1)  # Unknown
+            self.writeLong(3, 0)  # Tokens Gained
+            self.writeLong(4, 0)  # Trophies Gained
+            self.writeLong(6, 0)  # Demo Account
+            self.writeLong(7, 0)  # Invites Blocked
+            self.writeLong(8, 0)  # Star Points Gained
+            self.writeLong(9, 1)  # Show Star Points
+            self.writeLong(10, 0)  # Power Play Trophies Gained
+            self.writeLong(12, 1)  # Unknown
+            self.writeLong(14, 0)  # Coins Gained
+            self.writeLong(15, 0)  # AgeScreen | 3 = underage (disable social media) | 1 = age popup
+            self.writeLong(16, 1)
+            self.writeLong(17, 0)  # Team Chat Muted
+            self.writeLong(18, 1)  # Esport Button
+            self.writeLong(19, 0)  # Champion Ship Lives Buy Popup
+            self.writeLong(20, 0)  # Gems Gained
+            self.writeLong(21, 0)  # Looking For Team State
+            self.writeLong(22, 1)
+            self.writeLong(23, 0)  # Club Trophies Gained
+            self.writeLong(24, 1)  # Have already watched club league stupid animation
 
-        self.writeVInt(0)
+        self.writeVInt(0) # CooldownEntry::encode
+        for x in range(0):
+            self.writeVInt(0)
+            self.writeDataReference(0, 0) # Item Locked
+            self.writeVInt(0)
 
-        self.writeVInt(2)  # Brawlpass
+        self.writeVInt(2)  # BrawlPass
         for i in range(12, 14):
-            self.writeVInt(i)
-            self.writeVInt(34500)
-            self.writeBoolean(True)
+            self.writeVInt(i) # Season
+            self.writeVInt(34500) # Brawl Pass Tokens collected
+            self.writeBoolean(True) # Brawl Pass Purchased
             self.writeVInt(0)
 
             self.writeByte(2)
+            # LogicBitList::encode
             self.writeInt(4294967292)
             self.writeInt(4294967295)
             self.writeInt(511)
             self.writeInt(0)
 
             self.writeByte(1)
+            # LogicBitList::encode
             self.writeInt(4294967292)
             self.writeInt(4294967295)
             self.writeInt(511)
@@ -309,54 +316,57 @@ class OwnHomeDataMessage(PiranhaMessage):
         # Power League Data Array End #
 
         self.writeInt(0)
+        # LogicDailyData::encode End
+        # LogicConfData::encode Begin
+        self.writeVInt(0) # Shop Timestamp
 
-        self.writeVInt(0)
+        self.writeVInt(25) # EventSlots Available
+        for x in range(1):
+            self.writeVInt(1)
+            self.writeVInt(2)
+            self.writeVInt(3)
+            self.writeVInt(4)
+            self.writeVInt(5)
+            self.writeVInt(6)
+            self.writeVInt(7)
+            self.writeVInt(8)
+            self.writeVInt(9)
+            self.writeVInt(10)
+            self.writeVInt(11)
+            self.writeVInt(12)
+            self.writeVInt(13)
+            self.writeVInt(14)
+            self.writeVInt(15)
+            self.writeVInt(16)
+            self.writeVInt(17)
+            self.writeVInt(20)
+            self.writeVInt(21)
+            self.writeVInt(22)
+            self.writeVInt(23)
+            self.writeVInt(24)
+            self.writeVInt(30)
+            self.writeVInt(31)
+            self.writeVInt(32)
 
-        self.writeVInt(25) # Count
+        EventData = StaticData.EventData
+        activeEvents = EventData["ActiveEvents"]
 
-        self.writeVInt(1)
-        self.writeVInt(2)
-        self.writeVInt(3)
-        self.writeVInt(4)
-        self.writeVInt(5)
-        self.writeVInt(6)
-        self.writeVInt(7)
-        self.writeVInt(8)
-        self.writeVInt(9)
-        self.writeVInt(10)
-        self.writeVInt(11)
-        self.writeVInt(12)
-        self.writeVInt(13)
-        self.writeVInt(14)
-        self.writeVInt(15)
-        self.writeVInt(16)
-        self.writeVInt(17)
-        self.writeVInt(20)
-        self.writeVInt(21)
-        self.writeVInt(22)
-        self.writeVInt(23)
-        self.writeVInt(24)
-        self.writeVInt(30)
-        self.writeVInt(31)
-        self.writeVInt(32)
-
-        self.writeVInt(3) # Events
-
-        eventIndex = 1
-        for i in [5, 7, 24]:
+        self.writeVInt(len(activeEvents)) # Active Events
+        for event in activeEvents:
+            # EventData::encode
             self.writeVInt(-1)
-            self.writeVInt(eventIndex)  # EventType
-            self.writeVInt(0)  # EventsBeginCountdown
-            self.writeVInt(51208)  # Timer
-            self.writeVInt(0)  # tokens reward for new event
-            self.writeDataReference(15, i)  # MapID
-            self.writeVInt(-1)  # GameModeVariation
-            self.writeVInt(2)  # State
-            self.writeString()
+            self.writeVInt(event["EventIndex"])  # EventType
+            self.writeVInt(event.get("EventBeginCountdown", 0))  # EventsBeginCountdown
+            self.writeVInt(event["EventCountdown"])  # Timer
+            self.writeVInt(event.get("EventReward", 0))  # tokens reward for new event
+            self.writeDataReference(15, event["EventLocation"])  # MapID
+            self.writeVInt(event.get("EventGameModeVariation", -1))  # GameModeVariation
+            self.writeVInt(event["EventState"])  # State
+            self.writeString(event.get("EventTextEntry", None))
             self.writeVInt(0)
             self.writeVInt(0)
             self.writeVInt(3)
-            self.writeVInt(0)  # Modifiers
+            ByteStreamHelper.encodeIntList(self, event.get("Modifiers", []))  # Modifiers
             self.writeVInt(0)
             self.writeVInt(0)
             self.writeBoolean(False)  # Map Maker Map Structure Array
@@ -372,9 +382,8 @@ class OwnHomeDataMessage(PiranhaMessage):
             self.writeBoolean(False)
             self.writeBoolean(False)
             self.writeVInt(-1)
-            eventIndex += 1
 
-        self.writeVInt(0) # Comming Events
+        self.writeVInt(0) # Coming Events
 
         ByteStreamHelper.encodeIntList(self, [20, 35, 75, 140, 290, 480, 800, 1250, 1875, 2800]) # Brawler Upgrade Cost
         ByteStreamHelper.encodeIntList(self, [20, 50, 140, 280]) # Shop Coins Price
@@ -383,17 +392,22 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeBoolean(True)  # Show Offers Packs
 
         self.writeVInt(0) # ReleaseEntry
+        for x in range(0):
+            # ReleaseEntry::encode
+            self.writeDataReference(0, 0) # Locked Item
+            self.writeInt(0) # Time left
+            self.writeInt(-1)
 
         self.writeVInt(23)  # IntValueEntry
 
         self.writeLong(10008, 501)
         self.writeLong(65, 2)
-        self.writeLong(1, 41000050)  # ThemeID
+        self.writeLong(1, 41000050 + settings["ThemeID"])  # ThemeID
         self.writeLong(60, 36270)
         self.writeLong(66, 1)
         self.writeLong(61, 36270)  # SupportDisabled State | if 36218 < state its true
         self.writeLong(47, 41381)
-        #self.writeLong(29, 0)  # Skin Group Active For Campaign
+        #self.writeLong(29, 6)  # Skin Group Active For Campaign
         self.writeLong(48, 41381)
         self.writeLong(50, 0)  # Coming up quests placeholder
         self.writeLong(1100, 500)
@@ -418,18 +432,27 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
         self.writeVInt(0)
         self.writeVInt(0)
+        # LogicConfData::encode End
 
-        self.writeLong(player.ID[0], player.ID[1])  # PlayerID
+        self.writeLong(player.ID[0], player.ID[1])  # HomeID
 
         self.writeVInt(0) # NotificationFactory
 
-        self.writeVInt(-1)
-        self.writeBoolean(False)
+        self.writeVInt(-1) # FriendlyStarPower
+
+        # GacthaDrop Array Begin
+        self.writeBoolean(False) # Array Enabled
+        self.writeVInt(0) # GatchaDrop Count
+        # Gatcha Drop Array End
+
         self.writeVInt(0)
-        self.writeVInt(0)
+        for x in range(0):
+            self.writeDataReference(0, 0)
+
         self.writeVInt(0)
 
-        self.writeBoolean(False)
+        self.writeBoolean(False) # sub_7B2838
+        # LogicClientHome::encode End
 
         self.writeVLong(player.ID[0], player.ID[1])
         self.writeVLong(0, 0)

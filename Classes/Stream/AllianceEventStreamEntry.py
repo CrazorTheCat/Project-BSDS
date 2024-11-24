@@ -10,4 +10,3 @@ class AllianceEventStreamEntry:
         if info['Target'] != {}:
             self.writeLogicLong(info['Target']['ID'][0], info['Target']['ID'][1])
             self.writeString(info['Target']['Name'])
-

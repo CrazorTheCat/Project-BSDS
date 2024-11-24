@@ -12,10 +12,6 @@ class AskForAllianceDataMessage(PiranhaMessage):
         super().__init__(messageData)
         self.messageVersion = 0
 
-    def encode(self, fields):
-        self.writeLong(fields["AllianceID"][0], fields["AllianceID"][1])
-        self.writeBoolean(fields["Unk1"])
-
     def decode(self):
         fields = {}
         fields["AllianceID"] = self.readLong()

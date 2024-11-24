@@ -9,21 +9,21 @@ class MyAllianceMessage(PiranhaMessage):
         self.messageVersion = 0
 
     def encode(self, fields, player):
-        if fields["HasClub"] == True:
+        self.writeVInt(0) # Online Members
+        self.writeBoolean(fields["HasClub"])
+
+        if fields["HasClub"]:
             clubdb_instance = ClubDatabaseHandler()
             clubData = json.loads(clubdb_instance.getClubWithLowID(player.AllianceID[1])[0][1])
-            localMemberData = clubdb_instance.getMemberWithLowID(clubData, player.ID[1])
+            localMemberData = clubdb_instance.getMemberWithID(clubData, player.ID)
 
-            self.writeVInt(1) # Onlines Members TODO: members state
-            self.writeBoolean(True)
             self.writeDataReference(25, localMemberData["Role"])
         
             AllianceHeaderEntry.encode(self, clubdb_instance, clubData)
 
             self.writeBoolean(False)
-        else:
-            self.writeVInt(0)
-            self.writeVInt(0)
+
+        self.writeBoolean(False) # what is this?
 
     def decode(self):
         fields = {}

@@ -57,42 +57,29 @@ class LoginMessage(PiranhaMessage):
             fields["Socket"] = calling_instance.client
             db_instance = DatabaseHandler()
             if db_instance.playerExist(fields["PassToken"], fields["AccountID"]):
-                player_data = json.loads(db_instance.getPlayerEntry(fields["AccountID"])[2])
-                try:
-                    player_data["AllianceID"] = player_data["AllianceID"]
-                except:
-                    player_data["AllianceID"] = [0, 0]
-                    db_instance.updatePlayerData(player_data, calling_instance)
                 db_instance.loadAccount(calling_instance.player, fields["AccountID"])
             else:
-                db_instance.createAccount(calling_instance.player.getDataTemplate(fields["AccountID"][0], fields["AccountID"][1], fields["PassToken"]))
+                db_instance.createAccount(
+                    calling_instance.player.getDataTemplate(fields["AccountID"][0], fields["AccountID"][1],
+                                                            fields["PassToken"]))
 
             ClientsManager.AddPlayer(calling_instance.player.ID, calling_instance.client)
 
             contentUpdateInfo = Utility.getContentUpdaterInfo()
             if Configuration.settings["UseContentUpdater"] == True and fields["ResourceSha"] != contentUpdateInfo[1]:
-                Messaging.sendMessage(20103, {'Socket': calling_instance.client, 'ErrorID': 7, 'Message': None, 'FingerprintData': Utility.getFingerprintData(contentUpdateInfo[1]), 'ContentURL': f'http://{socket.gethostbyname(socket.gethostname())}:8080'})
+                Messaging.sendMessage(20103, {'Socket': calling_instance.client, 'ErrorID': 7, 'Message': None,
+                                              'FingerprintData': Utility.getFingerprintData(contentUpdateInfo[1]),
+                                              'ContentURL': f'http://{socket.gethostbyname(socket.gethostname())}:8080'})
 
             elif fields["ClientMajor"] == 45:
                 Messaging.sendMessage(20104, fields, calling_instance.player)
                 Messaging.sendMessage(24101, fields, calling_instance.player)
 
-                
-                try:
-                    clubdb_instance = ClubDatabaseHandler()
-                    json.loads(clubdb_instance.getClubWithLowID(calling_instance.player.AllianceID[1])[0][1])
-                    fields["HasClub"] = True
-
-                except IndexError:
-                    player_data = json.loads(db_instance.getPlayerEntry(calling_instance.player.ID)[2])
-                    player_data["AllianceID"] = [0, 0]
-                    db_instance.updatePlayerData(player_data, calling_instance)
-                    fields["HasClub"] = False
+                fields["HasClub"] = calling_instance.player.AllianceID != [0, 0]
 
                 Messaging.sendMessage(24399, fields, calling_instance.player)
                 if fields["HasClub"]:
                     Messaging.sendMessage(24311, fields, calling_instance.player)
-                
 
             db_instance.cursor.close()
 
