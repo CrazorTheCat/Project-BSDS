@@ -2,7 +2,7 @@
 # DisableNagle: reduce delay and improve performance between client and server BUT require more power #
 
 settings = {
-    "ThemeID": 45,
+    "ThemeID": 50,
     "DisableNagle": True,
     "PrintEnabled": True,
     "UseContentUpdater": False,
