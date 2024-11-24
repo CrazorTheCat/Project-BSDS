@@ -63,7 +63,7 @@ class LoginMessage(PiranhaMessage):
                     calling_instance.player.getDataTemplate(fields["AccountID"][0], fields["AccountID"][1],
                                                             fields["PassToken"]))
 
-            ClientsManager.AddPlayer(calling_instance.player.ID, calling_instance.client)
+            ClientsManager.AddPlayer(calling_instance.player.ID, calling_instance.client, calling_instance)
 
             contentUpdateInfo = Utility.getContentUpdaterInfo()
             if Configuration.settings["UseContentUpdater"] == True and fields["ResourceSha"] != contentUpdateInfo[1]:
