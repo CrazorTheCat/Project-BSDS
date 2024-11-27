@@ -1,7 +1,7 @@
 # *!! DEV BRANCH MAY NOT WORK !!* #
-```diff
--  # *!! Currently broken !!*
-```
+
+# $${\color{!! Currently broken !!}Red}$$ #
+
 
 Discord link : https://discord.gg/mt4dUxXryh
 
