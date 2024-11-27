@@ -1,6 +1,6 @@
 # *!! DEV BRANCH MAY NOT WORK !!* #
 
-# <code style="color : red">!! Currently broken !!</code> #
+# !! Currently broken !! #
 
 
 <code style="color : name_color">text</code>Discord link : https://discord.gg/mt4dUxXryh
