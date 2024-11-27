@@ -1,3 +1,5 @@
+# *!! DEV BRANCH MAY NOT WORK !!* #
+
 Discord link : https://discord.gg/mt4dUxXryh
 
 ANDROID (MEDIAFIRE) : https://www.mediafire.com/file/6hxotr77m4miwie/com.projectbsds.v45225.apk/file
