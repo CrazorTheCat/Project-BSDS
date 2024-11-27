@@ -1,5 +1,8 @@
 import traceback
+
+from Classes.Debugger import Debugger
 from Classes.ClientsManager import ClientsManager
+from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
 
 class Messaging:
     @staticmethod
@@ -15,7 +18,6 @@ class Messaging:
 
     @staticmethod
     def sendMessage(messageType, fields, player=None, playerIDs=None, item = None):
-        from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
         message = LogicLaserMessageFactory.createMessageByType(messageType, b'')
         if not playerIDs:
             if player is not None:
@@ -27,7 +29,7 @@ class Messaging:
             try:
                 fields["Socket"].send(message.messageBuffer)
             except Exception:
-                print(traceback.format_exc())
+                Debugger.error(traceback.format_exc())
         else:
             for pl in playerIDs:
                 message.clear(0)

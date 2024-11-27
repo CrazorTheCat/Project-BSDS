@@ -1,23 +1,17 @@
 import traceback
 
-import Configuration
 from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
-from Classes.Messaging import Messaging
+from Classes.Debugger import Debugger
 
 class MessageManager:
     def receiveMessage(self, messageType, messagePayload):
         message = LogicLaserMessageFactory.createMessageByType(messageType, messagePayload)
         if message is not None:
             try:
-                if Configuration.settings["Proxy"] == False and message.isServerToClient():
+                if message.isServerToClient():
                     message.encode()
                 else:
-                    message.fields = message.decode()
-                    if not Configuration.settings["Proxy"]:
-                        message.execute(self, message.fields)
+                    message.execute(self, message.decode())
 
             except Exception:
-                print(traceback.format_exc())
-        
-        if not Configuration.settings["Proxy"]:
-            Messaging.sendMessage(23457, {"Socket": self.client}, self.player)
+                Debugger.error(traceback.format_exc())

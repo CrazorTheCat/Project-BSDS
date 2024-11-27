@@ -5,6 +5,7 @@ from Classes.Commands.Client.LogicGatchaCommand import LogicGatchaCommand
 from Classes.Commands.Server.LogicChangeAvatarNameCommand import LogicChangeAvatarNameCommand
 from Classes.Commands.Server.LogicGiveDeliveryItemsCommand import LogicGiveDeliveryItemsCommand
 
+from Classes.Debugger import Debugger
 
 class LogicCommandManager:
     commandsList = {
@@ -77,6 +78,7 @@ class LogicCommandManager:
             command = LogicCommandManager.commandsList[commandType]
         except KeyError:
             command = str(commandType)
+
         if type(command) == str:
             return command
         else:
@@ -89,12 +91,12 @@ class LogicCommandManager:
         commandList = LogicCommandManager.commandsList
         if LogicCommandManager.commandExist(commandType):
             if type(commandList[commandType]) == str:
-                print(commandType, ":", LogicCommandManager.getCommandsName(commandType), "skipped")
+                Debugger.info(f"{commandType} : {LogicCommandManager.getCommandsName(commandType)} skipped")
             else:
-                print(commandType, ":", LogicCommandManager.getCommandsName(commandType), "created")
+                Debugger.info(f"{commandType} : {LogicCommandManager.getCommandsName(commandType)} created")
                 return commandList[commandType](commandPayload)
         else:
-            print(commandType, "skipped")
+            Debugger.info(f"{commandType} skipped")
             return None
 
     def isServerToClient(commandType):

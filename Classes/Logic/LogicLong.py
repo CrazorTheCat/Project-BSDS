@@ -1,4 +1,4 @@
-from typing import overload
+from Classes.Debugger import Debugger
 
 
 class LogicLong:
@@ -80,4 +80,4 @@ class LogicLong:
         return lowerInt | high << 32
 
     def toString(text, logiclong):
-        print(text, f"LogicLong({logiclong.high},{logiclong.low})")
+        Debugger.info(f"{text} LogicLong({logiclong.high}, {logiclong.low})")
