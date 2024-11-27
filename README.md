@@ -1,6 +1,6 @@
 # *!! DEV BRANCH MAY NOT WORK !!* #
 
-# $${\color{red}Currently \broken}$$ #
+# $${\color{red}Currently \space broken}$$ #
 
 
 Discord link : https://discord.gg/mt4dUxXryh
