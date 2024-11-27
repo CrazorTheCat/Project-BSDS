@@ -4,6 +4,7 @@
 settings = {
     "ThemeID": 50,
     "DisableNagle": True,
+    "Port": 9339,
     "PrintEnabled": True,
     "UseContentUpdater": False,
     "Proxy": False,
