@@ -15,6 +15,7 @@ class LogicGatchaCommand(LogicCommand):
     def decode(self, calling_instance):
         fields = {}
         LogicCommand.decode(calling_instance, fields, False)
+        fields["BoxID"] = calling_instance.readVInt()
         LogicCommand.parseFields(fields)
         return fields
 

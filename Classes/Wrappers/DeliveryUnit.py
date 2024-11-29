@@ -1,14 +1,20 @@
-from Classes.Files.Classes.Regions import Regions
 from Classes.Wrappers.GatchaDrop import GatchaDrop
 
-
 class DeliveryUnit:
-    def encode(calling_instance, fields):
-        calling_instance.writeVInt(fields[0])
-        calling_instance.writeVInt(fields[1])
-        for i in range(fields[1]):
-            GatchaDrop.encode(calling_instance, fields[2])
 
+    @staticmethod
+    def encode(calling_instance, field, fields):
+        calling_instance.writeVInt(field)
+        calling_instance.writeVInt(len(fields["DeliveryItems"]))
+        for i in fields["DeliveryItems"]:
+            GatchaDrop.encode(calling_instance, i)
+
+    @staticmethod
     def decode(calling_instance, fields):
-        fields["DeliveryUnit"] = {} # TODO: this thing
+        fields["DeliveryUnit"] = {}
+        fields["DeliveryUnit"]["DeliveryType"] = calling_instance.readVInt()
+        fields["DeliveryUnit"]["GatchaItemCount"] = calling_instance.readVInt()
+        for i in range(fields["DeliveryUnit"]["GatchaItemCount"]):
+            GatchaDrop.decode(calling_instance, fields)
+
         return fields

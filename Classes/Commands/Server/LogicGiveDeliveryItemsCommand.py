@@ -10,10 +10,9 @@ class LogicGiveDeliveryItemsCommand(LogicServerCommand):
     def encode(self, fields):
         self.writeVInt(0)
 
-        self.writeVInt(1) # array
-
-        for i in range(1):
-            DeliveryUnit.encode(self, [100, 1, [10, 0, 7, 0, 0, 0, i, i]])
+        self.writeVInt(len(fields["DeliveryTypes"])) # array
+        for i in fields["DeliveryTypes"]:
+            DeliveryUnit.encode(self, i, fields)
 
         self.writeBoolean(False) # TODO: Forced Drops
 
@@ -22,7 +21,7 @@ class LogicGiveDeliveryItemsCommand(LogicServerCommand):
         self.writeVInt(0)
         self.writeBoolean(False)
         self.writeBoolean(False)
-        self.writeBoolean(False)
+        self.writeBoolean(False) # ByteStreamHelper::writeDataReference
         self.writeDataReference(0, 0)
 
         LogicServerCommand.encode(self, fields)
@@ -33,4 +32,4 @@ class LogicGiveDeliveryItemsCommand(LogicServerCommand):
         return LogicServerCommand.decode(calling_instance, fields)
 
     def getCommandType(self):
-        return 201
+        return 203
