@@ -1,5 +1,5 @@
 from Classes.Packets.PiranhaMessage import PiranhaMessage
-
+from Classes.Messaging import Messaging
 
 class KeepAliveServerMessage(PiranhaMessage):
     def __init__(self, messageData):
@@ -13,7 +13,7 @@ class KeepAliveServerMessage(PiranhaMessage):
         return {}
 
     def execute(message, calling_instance, fields):
-        pass
+        Messaging.sendMessage(23457, {"Socket": calling_instance.client}, calling_instance.player) # Send lobby info
 
     def getMessageType(self):
         return 20108

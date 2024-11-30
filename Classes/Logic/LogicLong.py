@@ -2,9 +2,17 @@ from Classes.Debugger import Debugger
 
 
 class LogicLong:
-    def __init__(self, high, low):
-        self.high = high
-        self.low = low
+    def __init__(self):
+        self.high = 0
+        self.low = 0
+
+    def __init__(self, high, low=0):
+        if type(high) == list:
+            self.high = high[0]
+            self.low = high[1]
+        else:        
+            self.high = high
+            self.low = low
 
     @staticmethod
     def clone(logicLong):

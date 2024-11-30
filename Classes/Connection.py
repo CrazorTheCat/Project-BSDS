@@ -44,9 +44,6 @@ class Connection(threading.Thread):
                     self.client.close()
                     break
 
-                elif (timeNow - self.lastSentPacketTime) >= 5:
-                    Messaging.sendMessage(23457, {"Socket": self.client}, self.player) # Send lobby info
-
 
         except Exception:
             Debugger.error(f"Exception with client {self.address}, Closing connection...")

@@ -3,5 +3,6 @@ settings = {
     "Port": 9339,
     "PrintEnabled": True,
     "Verbose": True,
-    "UseContentUpdater": False
+    "UseContentUpdater": False,
+    "Testing": False
 }

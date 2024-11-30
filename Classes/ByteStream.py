@@ -490,6 +490,9 @@ class ByteStream(ChecksumEncoder):
 
     def writeVInt(self, data):
         self.bitoffset = 0
+        if type(data) == str:
+            data = int(data)
+            Debugger.warning("Transformed a str to a int!")
         final = b''
         if (data & 2147483648) != 0:
             if data >= -63:
@@ -581,11 +584,7 @@ class ByteStream(ChecksumEncoder):
     def decodeLogicLong(self, logicLong=None):
         return ByteStreamHelper.decodeLogicLong(self, logicLong)
 
-    def encodeLogicLong(self, high, low = None):
-        logicLong = high
-        if not isinstance(high, LogicLong):
-            logicLong = LogicLong(high, low)
-
+    def encodeLogicLong(self, logicLong):
         ByteStreamHelper.encodeLogicLong(self, logicLong)
 
     def decodeLogicLongList(self):
