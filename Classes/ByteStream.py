@@ -30,7 +30,6 @@ class ByteStream(ChecksumEncoder):
     def ensureCapacity(self, length):
         offset = self.offset
         if len(self.messagePayload) < offset + length:
-            buffer_copy = self.messagePayload
             buf_len = length
             self.length = buf_len
             self.messagePayload += bytes([0] * buf_len)
@@ -320,10 +319,7 @@ class ByteStream(ChecksumEncoder):
         return result
 
     def readVLong(self):
-        result = []
-        result.append(self.readVInt())
-        result.append(self.readVInt())
-        return result
+        return [self.readVInt(), self.readVInt()]
 
     def removeByteArray(self):
         self.messagePayload = b''
@@ -494,8 +490,6 @@ class ByteStream(ChecksumEncoder):
 
     def writeVInt(self, data):
         self.bitoffset = 0
-        if type(data) == str:
-            data = int(data)
         final = b''
         if (data & 2147483648) != 0:
             if data >= -63:
@@ -587,7 +581,11 @@ class ByteStream(ChecksumEncoder):
     def decodeLogicLong(self, logicLong=None):
         return ByteStreamHelper.decodeLogicLong(self, logicLong)
 
-    def encodeLogicLong(self, logicLong):
+    def encodeLogicLong(self, high, low = None):
+        logicLong = high
+        if not isinstance(high, LogicLong):
+            logicLong = LogicLong(high, low)
+
         ByteStreamHelper.encodeLogicLong(self, logicLong)
 
     def decodeLogicLongList(self):
