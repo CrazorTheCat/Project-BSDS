@@ -14,8 +14,6 @@ class OwnHomeDataMessage(PiranhaMessage):
         ownedPinsCount = len(player.OwnedPins)
         ownedThumbnailCount = len(player.OwnedThumbnails)
         ownedSkins = []
-        print('pula')
-        print(player.__str__())
 
         for brawlerInfo in player.OwnedBrawlers.values():
             try:
@@ -555,7 +553,6 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(5)
         self.writeVInt(0)
         self.writeVInt(0)
-        print("sugi pula")
 
     def decode(self):
         fields = {}
