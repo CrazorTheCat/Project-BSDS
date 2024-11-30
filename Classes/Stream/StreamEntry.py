@@ -6,7 +6,6 @@ class StreamEntry:
 
     @staticmethod
     def encode(self: ByteStream, stream):
-        Debugger.error(stream)
         self.encodeLogicLong(LogicLong(stream["StreamID"])) # StreamEntryID
         self.encodeLogicLong(LogicLong([0, 1])) # SenderID
         self.writeString(stream['PlayerName'])
