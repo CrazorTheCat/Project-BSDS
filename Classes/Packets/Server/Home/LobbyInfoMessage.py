@@ -1,6 +1,6 @@
 from Classes.ClientsManager import ClientsManager
 from Classes.Packets.PiranhaMessage import PiranhaMessage
-
+import Configuration
 
 class LobbyInfoMessage(PiranhaMessage):
     def __init__(self, messageData):
@@ -9,7 +9,7 @@ class LobbyInfoMessage(PiranhaMessage):
 
     def encode(self, fields, player):
         self.writeVInt(ClientsManager.GetCount())
-        self.writeString(f"Project BSDS\nVersion: {player.ClientVersion}")
+        self.writeString(f"Project BSDS {''.join('Developer Build' if Configuration.settings['Testing'] else '')}\nVersion: {player.ClientVersion}")
         self.writeVInt(0)
 
     def decode(self):
