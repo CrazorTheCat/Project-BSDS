@@ -17,6 +17,7 @@ class KeepAliveMessage(PiranhaMessage):
     def execute(message, calling_instance, fields):
         fields["Socket"] = calling_instance.client
         Messaging.sendMessage(20108, fields)
+        Messaging.sendMessage(23457, fields, calling_instance.player) # Send lobby info
 
     def getMessageType(self):
         return 10108

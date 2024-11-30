@@ -1,11 +1,13 @@
 from Classes.ByteStream import ByteStream
+from Classes.Debugger import Debugger
+from Classes.Logic.LogicLong import LogicLong
 
 class StreamEntry:
 
     @staticmethod
     def encode(self: ByteStream, stream):
-        self.writeLogicLong(*stream["StreamID"]) # StreamEntryID
-        self.writeLogicLong(*[0, 1]) # SenderID
+        self.encodeLogicLong(LogicLong(stream["StreamID"])) # StreamEntryID
+        self.encodeLogicLong(LogicLong([0, 1])) # SenderID
         self.writeString(stream['PlayerName'])
         self.writeVInt(stream['PlayerRole'])
         self.writeVInt(0) # Time since Stream was sent

@@ -1,5 +1,5 @@
 from Classes.Packets.PiranhaMessage import PiranhaMessage
-
+from Classes.Messaging import Messaging
 
 class KeepAliveServerMessage(PiranhaMessage):
     def __init__(self, messageData):

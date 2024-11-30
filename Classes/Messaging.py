@@ -2,7 +2,6 @@ import traceback
 
 from Classes.Debugger import Debugger
 from Classes.ClientsManager import ClientsManager
-from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory
 
 class Messaging:
     @staticmethod
@@ -18,6 +17,7 @@ class Messaging:
 
     @staticmethod
     def sendMessage(messageType, fields, player=None, playerIDs=None, item = None):
+        from Classes.Logic.LogicLaserMessageFactory import LogicLaserMessageFactory # Causes Circular import from packets :(
         message = LogicLaserMessageFactory.createMessageByType(messageType, b'')
         if not playerIDs:
             if player is not None:

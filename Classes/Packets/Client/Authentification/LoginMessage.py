@@ -7,7 +7,6 @@ from Classes.Messaging import Messaging
 from Classes.Packets.PiranhaMessage import PiranhaMessage
 from Classes.Utility import Utility
 from Database.DatabaseHandler import DatabaseHandler, ClubDatabaseHandler
-import json
 
 
 class LoginMessage(PiranhaMessage):

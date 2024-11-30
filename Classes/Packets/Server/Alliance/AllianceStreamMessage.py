@@ -14,7 +14,6 @@ class AllianceStreamMessage(PiranhaMessage):
 
         self.writeVInt(len(clubData["ChatData"]))
         for i in clubData['ChatData']:
-            print(i)
             self.writeVInt(i['StreamType'])
             StreamEntryFactory.encode(self, fields, i)
 
