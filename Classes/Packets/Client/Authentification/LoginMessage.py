@@ -1,7 +1,9 @@
+import json
 import socket
 
 import Configuration
 from Classes.ClientsManager import ClientsManager
+from Classes.Debugger import Debugger
 from Classes.Messaging import Messaging
 
 from Classes.Packets.PiranhaMessage import PiranhaMessage
@@ -78,7 +80,14 @@ class LoginMessage(PiranhaMessage):
 
                 Messaging.sendMessage(24399, fields, calling_instance.player)
                 if fields["HasClub"]:
+                    club = ClubDatabaseHandler()
+                    stream = json.loads(club.getClubWithLowID(calling_instance.player.AllianceID[1])[0][1])
+                    fields["StreamData"] = stream.get("ChatData", [])
+                    fields["AllianceID"] = calling_instance.player.AllianceID
+                    fields["ShowOnlineMembers"] = True
+                    Messaging.sendMessage(24301, fields, calling_instance.player)
                     Messaging.sendMessage(24311, fields, calling_instance.player)
+                    club.cursor.close()
 
             db_instance.cursor.close()
 

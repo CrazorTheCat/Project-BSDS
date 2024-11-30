@@ -1,12 +1,15 @@
 import socket
+
+import Configuration
+
 from Classes.Debugger import Debugger
 from Classes.Connection import Connection
 
 class ServerConnection:
     def __init__(self, address):
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)         # Create the socket
-        self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True)    # Prevent "Address already in use" error
-        self.server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, True)    # Remove delay 
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # Create the server socket
+        self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, True) # Prevent "Address already in use" error
+        self.server.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, Configuration.settings["RemoveDelay"]) # Remove delay
         self.setupConnection(address)
 
     def setupConnection(self, address):

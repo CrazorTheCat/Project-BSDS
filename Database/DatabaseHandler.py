@@ -1,6 +1,8 @@
 import json
 import sqlite3
 import traceback
+
+from Classes.Debugger import Debugger
 from Classes.Files.Classes.Regions import Regions
 
 class DatabaseHandler():
@@ -155,7 +157,8 @@ class ClubDatabaseHandler:
             self.cursor.execute("SELECT * from main where LowID=?", (low,))
             return self.cursor.fetchall()
         except Exception as e:
-            print(e)
+            Debugger.error(f"[ClubDatabaseHandler::getClubWithLowID] Unable to get Alliance/Club with LowID {low}, error: {e}")
+            return "{}" # Making json.loads not throw an error
 
     def getMembersSorted(self, clubdata):
         try:

@@ -49,6 +49,7 @@ class JoinAllianceMessage(PiranhaMessage):
             Messaging.sendMessage(24399, fields, calling_instance.player)
             fields.clear()
             fields["Socket"] = calling_instance.client
+            fields["StreamData"] = [joinStreamData]
             Messaging.sendMessage(24311, fields, playerIDs=clubData["Members"], item="LowID")
             fields["AllianceID"] = calling_instance.player.AllianceID
             Messaging.sendMessage(24301, fields, playerIDs=clubData["Members"], item="LowID")

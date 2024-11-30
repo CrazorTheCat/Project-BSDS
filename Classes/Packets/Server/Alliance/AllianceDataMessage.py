@@ -13,7 +13,7 @@ class AllianceDataMessage(PiranhaMessage):
         db_instance = DatabaseHandler()
         clubData = json.loads(clubdb_instance.getClubWithLowID(fields["AllianceID"][1])[0][1])
 
-        self.writeBoolean(player.AllianceID == [clubData["HighID"], clubData["LowID"]])
+        self.writeBoolean(fields.get("ShowOnlineMembers", False))
         AllianceFullEntry.encode(self, clubdb_instance, db_instance, clubData)
 
     def decode(self):

@@ -14,6 +14,8 @@ class OwnHomeDataMessage(PiranhaMessage):
         ownedPinsCount = len(player.OwnedPins)
         ownedThumbnailCount = len(player.OwnedThumbnails)
         ownedSkins = []
+        print('pula')
+        print(player.__str__())
 
         for brawlerInfo in player.OwnedBrawlers.values():
             try:
@@ -402,7 +404,7 @@ class OwnHomeDataMessage(PiranhaMessage):
 
         self.writeLong(10008, 501)
         self.writeLong(65, 2)
-        self.writeLong(1, 41000000 + settings["ThemeID"])  # ThemeID
+        self.writeLong(1, 41000050 + settings["ThemeID"])  # ThemeID
         self.writeLong(60, 36270)
         self.writeLong(66, 1)
         self.writeLong(61, 36270)  # SupportDisabled State | if 36218 < state its true
@@ -466,7 +468,6 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(16)
 
         self.writeVInt(3 + ownedBrawlersCount)
-
         for brawlerInfo in player.OwnedBrawlers.values():
             self.writeDataReference(23, brawlerInfo["CardID"])
             self.writeVInt(-1)
@@ -487,14 +488,14 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(ownedBrawlersCount)
 
         for brawlerID,brawlerInfo in player.OwnedBrawlers.items():
-            self.writeDataReference(16, brawlerID)
+            self.writeDataReference(16, int(brawlerID))
             self.writeVInt(-1)
             self.writeVInt(brawlerInfo["Trophies"])
 
         self.writeVInt(ownedBrawlersCount)
 
         for brawlerID, brawlerInfo in player.OwnedBrawlers.items():
-            self.writeDataReference(16, brawlerID)
+            self.writeDataReference(16, int(brawlerID))
             self.writeVInt(-1)
             self.writeVInt(brawlerInfo["HighestTrophies"])
 
@@ -503,14 +504,14 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(ownedBrawlersCount)
 
         for brawlerID, brawlerInfo in player.OwnedBrawlers.items():
-            self.writeDataReference(16, brawlerID)
+            self.writeDataReference(16, int(brawlerID))
             self.writeVInt(-1)
             self.writeVInt(brawlerInfo["PowerPoints"])
 
         self.writeVInt(ownedBrawlersCount)
 
         for brawlerID, brawlerInfo in player.OwnedBrawlers.items():
-            self.writeDataReference(16, brawlerID)
+            self.writeDataReference(16, int(brawlerID))
             self.writeVInt(-1)
             self.writeVInt(brawlerInfo["PowerLevel"] - 1)
 
@@ -519,7 +520,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(ownedBrawlersCount)
 
         for brawlerID, brawlerInfo in player.OwnedBrawlers.items():
-            self.writeDataReference(16, brawlerID)
+            self.writeDataReference(16, int(brawlerID))
             self.writeVInt(-1)
             self.writeVInt(brawlerInfo["State"])
 
@@ -554,6 +555,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(5)
         self.writeVInt(0)
         self.writeVInt(0)
+        print("sugi pula")
 
     def decode(self):
         fields = {}

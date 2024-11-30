@@ -1,6 +1,7 @@
 class Debugger:
     WARNING = '\033[93m'
     FAIL = '\033[91m'
+    INFO = '\x1b[36m'
     ENDC = '\033[0m'
 
     @staticmethod
@@ -13,4 +14,4 @@ class Debugger:
 
     @staticmethod
     def info(message):
-        print(f"[INFO] {message}")
+        print(f"{Debugger.INFO}[INFO]{Debugger.ENDC} {message}")

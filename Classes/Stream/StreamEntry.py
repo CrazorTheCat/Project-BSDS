@@ -7,7 +7,7 @@ class StreamEntry:
     @staticmethod
     def encode(self: ByteStream, stream):
         self.encodeLogicLong(LogicLong(stream["StreamID"])) # StreamEntryID
-        self.encodeLogicLong(LogicLong([0, 1])) # SenderID
+        self.encodeLogicLong(LogicLong(stream["PlayerID"])) # SenderID
         self.writeString(stream['PlayerName'])
         self.writeVInt(stream['PlayerRole'])
         self.writeVInt(0) # Time since Stream was sent

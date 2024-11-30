@@ -382,15 +382,16 @@ class LogicLaserMessageFactory:
                 return message.__name__
 
     def messageExist(messageType):
-        return (messageType in LogicLaserMessageFactory.messagesList.keys())
+        return messageType in LogicLaserMessageFactory.messagesList.keys()
 
     def createMessageByType(messageType, messagePayload):
         messagesList = LogicLaserMessageFactory.messagesList
         if LogicLaserMessageFactory.messageExist(messageType):
             if type(messagesList[messageType]) == str:
-                Debugger.info(f"{messageType} : {LogicLaserMessageFactory.getMessageName(messageType)} skipped")
+                isVerbose = Configuration.settings["Verbose"]
+                if not isVerbose: f"{messageType}, {LogicLaserMessageFactory.getMessageName(messageType)} skipped"
                 if Configuration.settings["Verbose"]:
-                    Debugger.info(f"{messageType} raw data : {messagePayload}")
+                    Debugger.info(f"{messageType}, {LogicLaserMessageFactory.getMessageName(messageType)} skipped. Raw payload: {messagePayload}")
             else:
                 Debugger.info(f"{messageType} : {LogicLaserMessageFactory.getMessageName(messageType)} created")                
                 return messagesList[messageType](messagePayload)

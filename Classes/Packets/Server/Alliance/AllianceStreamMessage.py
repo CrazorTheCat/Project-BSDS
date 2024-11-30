@@ -9,19 +9,18 @@ class AllianceStreamMessage(PiranhaMessage):
         self.messageVersion = 0
 
     def encode(self, fields, player):
-        clubdb_instance = ClubDatabaseHandler()
-        clubData = json.loads(clubdb_instance.getClubWithLowID(player.AllianceID[1])[0][1])
-
-        self.writeVInt(len(clubData["ChatData"]))
-        for i in clubData['ChatData']:
+        self.writeVInt(len(fields["StreamData"]))
+        for i in fields["StreamData"]:
             self.writeVInt(i['StreamType'])
             StreamEntryFactory.encode(self, fields, i)
 
     def decode(self):
+        fields = {}
+        fields["StreamCount"] = self.readVInt()
+        fields["Streams"] = []
+        for i in range(fields["StreamCount"]):
+            fields["Streams"].append({"StreamType": self.readVInt(), "StreamData": None}) # wont work as its not completed
         return {}
-
-    def execute(message, calling_instance, fields):
-        pass
 
     def getMessageType(self):
         return 24311

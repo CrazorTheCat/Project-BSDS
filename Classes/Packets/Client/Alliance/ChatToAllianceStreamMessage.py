@@ -26,6 +26,7 @@ class ChatToAllianceStreamMessage(PiranhaMessage):
                                                                memberData["Role"],
                                                                msgData=fields["Message"]
                                                                )
+        fields["StreamData"] = [streamData]
         clubData["ChatData"].append(streamData)
         clubdb_instance.updateClubData(clubData, calling_instance.player.AllianceID[1])
         Messaging.sendMessage(24311, fields, playerIDs=clubData["Members"], item="LowID")
