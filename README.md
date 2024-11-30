@@ -2,8 +2,7 @@
 
 # !! Currently broken !! #
 
-
-<code style="color : name_color">text</code>Discord link : https://discord.gg/mt4dUxXryh
+Discord link : https://discord.gg/mt4dUxXryh
 
 ANDROID (MEDIAFIRE) : https://www.mediafire.com/file/6hxotr77m4miwie/com.projectbsds.v45225.apk/file
 
