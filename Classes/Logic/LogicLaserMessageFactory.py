@@ -31,6 +31,9 @@ from Classes.Packets.Server.Alliance.AllianceDataMessage import AllianceDataMess
 from Classes.Packets.Server.Alliance.MyAllianceMessage import MyAllianceMessage
 from Classes.Packets.Server.Alliance.JoinableAllianceListMessage import JoinableAllianceListMessage
 from Classes.Packets.Server.Alliance.ChangeAllianceSettingsOkMessage import ChangeAllianceSettingsOkMessage
+from Classes.Debugger import Debugger
+
+import Configuration
 
 
 class LogicLaserMessageFactory:
@@ -369,14 +372,14 @@ class LogicLaserMessageFactory:
     }
 
     def getMessageName(messageType):
-        try:
-            message = LogicLaserMessageFactory.messagesList[messageType]
-        except KeyError:
-            message = str(messageType)
-        if type(message) == str:
-            return message
-        else:
-            return message.__name__
+            try:
+                message = LogicLaserMessageFactory.messagesList[messageType]
+            except KeyError:
+                message = str(messageType)
+            if type(message) == str:
+                return message
+            else:
+                return message.__name__
 
     def messageExist(messageType):
         return (messageType in LogicLaserMessageFactory.messagesList.keys())
@@ -385,10 +388,12 @@ class LogicLaserMessageFactory:
         messagesList = LogicLaserMessageFactory.messagesList
         if LogicLaserMessageFactory.messageExist(messageType):
             if type(messagesList[messageType]) == str:
-                print(messageType, ":", LogicLaserMessageFactory.getMessageName(messageType), "skipped", messagePayload)
+                Debugger.info(f"{messageType} : {LogicLaserMessageFactory.getMessageName(messageType)} skipped")
+                if Configuration.settings["Verbose"]:
+                    Debugger.info(f"{messageType} raw data : {messagePayload}")
             else:
-                print(messageType, ":", LogicLaserMessageFactory.getMessageName(messageType), "created")
+                Debugger.info(f"{messageType} : {LogicLaserMessageFactory.getMessageName(messageType)} created")                
                 return messagesList[messageType](messagePayload)
         else:
-            print(messageType, "skipped")
+            Debugger.info(f"{messageType} skipped")
             return None

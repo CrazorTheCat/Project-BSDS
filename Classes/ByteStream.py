@@ -558,15 +558,6 @@ class ByteStream(ChecksumEncoder):
         self.writeVInt(high)
         self.writeVInt(low)
 
-    def writeLogicLong(self, high, low = None):
-        if isinstance(high, LogicLong):
-            high = high.high
-            low = high.low
-        elif low is None: low = 0
-
-        self.writeVInt(high)
-        self.writeVInt(low)
-
     def writeCompressedString(self, data):
         self.bitoffset = 0
         compressedText = zlib.compress(data)

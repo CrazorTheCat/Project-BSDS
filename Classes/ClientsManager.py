@@ -1,3 +1,8 @@
+import Configuration
+import traceback
+
+from Classes.Debugger import Debugger
+
 class ClientsManager:
 
     PlayersList = {}
@@ -7,11 +12,16 @@ class ClientsManager:
             ClientsManager.RemovePlayer(playerID)
         ClientsManager.PlayersList[playerID[1]] = {"Socket": socket, "Connection": connection}
 
-    def RemovePlayer(PlayerID):
+    def RemovePlayer(client, playerID):
         try:
-            ClientsManager.PlayersList.pop(PlayerID[1])
+            allSockets = ClientsManager.GetAll()
+            if playerID[1] in allSockets.keys() and allSockets[playerID[1]]["Socket"] == client:
+                ClientsManager.PlayersList.pop(playerID[1])
         except KeyError:
-            print(f"Cannot remove socket with id: {PlayerID} Reason: {PlayerID} is not in the list.")
+            Debugger.error(f"Cannot remove socket with id: {playerID} Reason: {playerID} is not in the list.")
+        except Exception:
+            if Configuration.settings["Vebose"]:
+                Debugger.info(f"Error not handled correctly traceback:\n{traceback.format_exc()}")
 
     def GetAll():
         return ClientsManager.PlayersList

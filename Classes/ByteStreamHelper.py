@@ -70,8 +70,3 @@ class ByteStreamHelper:
         for logicLong in logicLongList:
             self.writeVInt(logicLong.getHigherInt())
             self.writeVInt(logicLong.getLowerInt())
-
-    def readBattlePlayerMap(self, fields):
-        if self.readBoolean() & 1 != 0:
-            LogicBattlePlayerMap.decode(self, fields) # whatever i will finish it in a far futur :trolled:
-        return fields
