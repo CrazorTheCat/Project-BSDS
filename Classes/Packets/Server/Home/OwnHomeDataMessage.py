@@ -402,7 +402,7 @@ class OwnHomeDataMessage(PiranhaMessage):
 
         self.writeLong(10008, 501)
         self.writeLong(65, 2)
-        self.writeLong(1, 41000050 + settings["ThemeID"])  # ThemeID
+        self.writeLong(1, 41000000 + settings["ThemeID"])  # ThemeID
         self.writeLong(60, 36270)
         self.writeLong(66, 1)
         self.writeLong(61, 36270)  # SupportDisabled State | if 36218 < state its true
