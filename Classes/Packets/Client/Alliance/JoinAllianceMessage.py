@@ -43,16 +43,13 @@ class JoinAllianceMessage(PiranhaMessage):
             calling_instance.player.AllianceID = playerData["AllianceID"] # It's better than loading the account again!
             fields["ResponseID"] = 40
             Messaging.sendMessage(24333, fields)
-            fields.clear()
-            fields["Socket"] = calling_instance.client
             fields["HasClub"] = True
             Messaging.sendMessage(24399, fields, calling_instance.player)
-            fields.clear()
-            fields["Socket"] = calling_instance.client
             fields["StreamData"] = [joinStreamData]
             Messaging.sendMessage(24311, fields, playerIDs=clubData["Members"], item="LowID")
             fields["AllianceID"] = calling_instance.player.AllianceID
             Messaging.sendMessage(24301, fields, playerIDs=clubData["Members"], item="LowID")
+            Messaging.sendMessage(22161, fields, calling_instance.player)
         else:
             fields["ResponseID"] = 42
             Messaging.sendMessage(24333, fields)

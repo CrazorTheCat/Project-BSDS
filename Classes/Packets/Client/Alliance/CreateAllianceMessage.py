@@ -44,9 +44,10 @@ class CreateAllianceMessage(PiranhaMessage):
 
         fields["ResponseID"] = 20
         Messaging.sendMessage(24333, fields)
-        Messaging.sendMessage(24311, fields, calling_instance.player)
+        #Messaging.sendMessage(24311, fields, calling_instance.player)
         fields["HasClub"] = True
         Messaging.sendMessage(24399, fields, calling_instance.player)
+        Messaging.sendMessage(22161, fields, calling_instance.player)
 
     def getMessageType(self):
         return 14301

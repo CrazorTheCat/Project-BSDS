@@ -44,18 +44,16 @@ class BattleEndMessage(PiranhaMessage):
 
         self.writeVInt(fields["HeroesCount"])
         for heroEntry in fields["Heroes"]:
-            self.writeBoolean(heroEntry["IsPlayer"])
-            self.writeBoolean(bool(heroEntry["Team"]))
-            self.writeBoolean(bool(heroEntry["Team"]))
-            self.writeVInt(1)
+            self.writeBoolean(heroEntry["IsPlayer"]) # IsPlayer
+            self.writeBoolean(heroEntry["Team"] != fields["Heroes"][0]["Team"]) # IsEnemy
+            self.writeBoolean(bool(heroEntry["Team"])) # StarPlayer
+
+            self.writeVInt(1) # Brawlers Count
             for i in range(1):
                 self.writeDataReference(heroEntry["Brawler"]["ID"][0], heroEntry["Brawler"]["ID"][1])
             self.writeVInt(1)
             for i in range(1):
-                if heroEntry["Brawler"]["SkinID"] != None:
-                    self.writeDataReference(heroEntry["Brawler"]["SkinID"][0], heroEntry["Brawler"]["SkinID"][1])
-                else:
-                    self.writeDataReference(0)
+                self.writeDataReference(*heroEntry["Brawler"]["SkinID"])
             self.writeVInt(1)
             for i in range(1):
                 self.writeVInt(1250)
@@ -78,7 +76,7 @@ class BattleEndMessage(PiranhaMessage):
             if heroEntry["IsPlayer"]:
                 self.writeBoolean(True)
                 self.writeVLong(5, 4181497)
-                self.writeString('Orange eSPORT')
+                self.writeString('Orange eSPORT') # why orange
                 self.writeDataReference(8, 16)
 
         self.writeVInt(0)
@@ -88,18 +86,18 @@ class BattleEndMessage(PiranhaMessage):
         self.writeVInt(0)
 
         self.writeVInt(2)
+        for x in range(1):
+            self.writeVInt(1)
+            self.writeVInt(1250)
+            self.writeVInt(1250)
 
-        self.writeVInt(1)
-        self.writeVInt(1250)
-        self.writeVInt(1250)
+            self.writeVInt(5)
+            self.writeVInt(999999)
+            self.writeVInt(999999)
 
-        self.writeVInt(5)
-        self.writeVInt(999999)
-        self.writeVInt(999999)
-
-        self.writeDataReference(28, 0)
-        self.writeBoolean(False)
-        self.writeBoolean(False)
+        self.writeDataReference(28, 0) # Profile Icon (Unused)
+        self.writeBoolean(False) # Play Again Entry
+        self.writeBoolean(False) # Quests Entry
         self.writeVInt(0)
         self.writeVInt(0)
         self.writeBoolean(False)

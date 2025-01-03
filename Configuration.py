@@ -5,5 +5,5 @@ settings = {
     "PrintEnabled": True,
     "Verbose": True,
     "UseContentUpdater": False,
-    "Testing": False
+    "Testing": True
 }

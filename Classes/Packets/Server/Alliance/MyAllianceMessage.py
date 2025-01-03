@@ -21,8 +21,6 @@ class MyAllianceMessage(PiranhaMessage):
         
             AllianceHeaderEntry.encode(self, clubdb_instance, clubData)
 
-            self.writeBoolean(False)
-
         self.writeBoolean(False) # what is this?
 
     def decode(self):

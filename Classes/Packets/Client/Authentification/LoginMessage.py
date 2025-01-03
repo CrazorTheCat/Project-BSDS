@@ -87,6 +87,7 @@ class LoginMessage(PiranhaMessage):
                     fields["ShowOnlineMembers"] = True
                     Messaging.sendMessage(24301, fields, calling_instance.player)
                     Messaging.sendMessage(24311, fields, calling_instance.player)
+                    Messaging.sendMessage(22161, fields, calling_instance.player)
                     club.cursor.close()
 
             db_instance.cursor.close()

@@ -43,6 +43,28 @@
       "EventState": 2,
       "EventTextEntry": null,
       "EventModifiers": []
+    },
+    {
+      "EventIndex": 16,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 31,
+      "EventGameModeVariation": -1,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
+    },
+    {
+      "EventIndex": 17,
+      "EventBeginCountdown": 0,
+      "EventCountdown": 51208,
+      "EventReward": 0,
+      "EventLocation": 0,
+      "EventGameModeVariation": 32,
+      "EventState": 2,
+      "EventTextEntry": null,
+      "EventModifiers": []
     }
   ],
 

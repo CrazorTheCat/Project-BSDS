@@ -434,7 +434,7 @@ class OwnHomeDataMessage(PiranhaMessage):
         self.writeVInt(0)
         # LogicConfData::encode End
 
-        self.writeLong(player.ID[0], player.ID[1])  # HomeID
+        self.writeLong(*player.ID)  # HomeID
 
         self.writeVInt(0) # NotificationFactory
 

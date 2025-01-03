@@ -29,15 +29,20 @@ class LogicPurchaseOfferCommand(LogicCommand):
         return fields
 
     def execute(self, calling_instance, fields):
+        fields["Socket"] = calling_instance.client
         if fields["Unk1"] == 0:
-            db_instance = DatabaseHandler()
-            player_data = json.loads(db_instance.getPlayerEntry(calling_instance.player.ID)[2])
-            for i,v in player_data["OwnedBrawlers"].items():
-                v["Skins"] = OwnedBrawlersLatest[int(i)]["Skins"]
-            player_data["OwnedPins"] = OwnedPinsLatest
-            player_data["OwnedThumbnails"] = OwnedThumbnailsLatest
-            db_instance.updatePlayerData(player_data, calling_instance)
-            Messaging.sendMessage(24104, {"Socket": calling_instance.client, "ServerChecksum": 0, "ClientChecksum": 0, "Tick": 0})
+            fields["DeliveryTypes"] = [10]
+            #fields["DeliveryItems"] = LogicBoxData.generateBoxRewards(10)
+            fields["Command"] = {"ID": 203}
+            Messaging.sendMessage(24111, fields)
+            #db_instance = DatabaseHandler()
+            #player_data = json.loads(db_instance.getPlayerEntry(calling_instance.player.ID)[2])
+            #for i,v in player_data["OwnedBrawlers"].items():
+                #v["Skins"] = OwnedBrawlersLatest[int(i)]["Skins"]
+            #player_data["OwnedPins"] = OwnedPinsLatest
+            #player_data["OwnedThumbnails"] = OwnedThumbnailsLatest
+            #db_instance.updatePlayerData(player_data, calling_instance)
+            #Messaging.sendMessage(24104, {"Socket": calling_instance.client, "ServerChecksum": 0, "ClientChecksum": 0, "Tick": 0})
 
     def getCommandType(self):
         return 519

@@ -6,17 +6,19 @@ from Classes.Debugger import Debugger
 
 
 class ByteStreamHelper:
-    def readDataReference(self):
-        result = []
-        result.append(self.readVInt())
-        if not result[0]:
-            return None
-        result.append(self.readVInt())
-        return result
+
+    def readDataReference(self) -> list:
+        high: int = self.readVInt()
+        if high > 0:
+            low: int = self.readVInt()
+        else:
+            low: int = 0
+
+        return [high, low]
 
     def writeDataReference(self, high=0, low=-1):
         self.writeVInt(high)
-        if high != 0:
+        if high > 0:
             self.writeVInt(low)
 
     def compress(self, data):
@@ -37,15 +39,16 @@ class ByteStreamHelper:
             intList.append(self.readVInt())
         return intList
 
-    def decodeLogicLong(self, logicLong=None):
+    def decodeLogicLong(self, logicLong=None) -> list:
         if logicLong is None:
             logicLong = LogicLong(0, 0)
         high = self.readVInt()
         logicLong.high = high
         low = self.readVInt()
         logicLong.low = low
+        return [high, low]
 
-    def decodeLogicLongList(self):
+    def decodeLogicLongList(self) -> list[LogicLong]:
         length = self.readVInt()
         logicLongList = []
         for i in range(length):
@@ -66,7 +69,7 @@ class ByteStreamHelper:
 
     def encodeLogicLongList(self, logicLongList):
         length = len(logicLongList)
-        self.writeVInt(self, length)
+        self.writeVInt(length)
         for logicLong in logicLongList:
             self.writeVInt(logicLong.getHigherInt())
             self.writeVInt(logicLong.getLowerInt())

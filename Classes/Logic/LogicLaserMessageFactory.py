@@ -32,6 +32,7 @@ from Classes.Packets.Server.Alliance.MyAllianceMessage import MyAllianceMessage
 from Classes.Packets.Server.Alliance.JoinableAllianceListMessage import JoinableAllianceListMessage
 from Classes.Packets.Server.Alliance.ChangeAllianceSettingsOkMessage import ChangeAllianceSettingsOkMessage
 from Classes.Debugger import Debugger
+from Classes.Packets.Server.Alliance.AllianceLeagueMessage import AllianceLeagueMessage
 
 import Configuration
 
@@ -274,6 +275,7 @@ class LogicLaserMessageFactory:
         22158: 'RankedMatchFinalPreparationStartedMessage',
         22159: 'RankedMatchTerminatedMessage',
         22160: 'AllianceLeagueRankingListMessage',
+        22161: AllianceLeagueMessage,
         22202: 'MapPreviewMessage',
         22377: 'GoogleServiceAccountBoundMessage',
         22687: 'GamecenterAccountAlreadyBoundMessage',
